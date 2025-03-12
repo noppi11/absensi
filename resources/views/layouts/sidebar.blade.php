@@ -16,6 +16,14 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
+                <li class="nav-header">Data Master</li>
+                <li class="nav-item">
+                    <a href="{{ route('kelas.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-building"></i>
+                        <p>Kelas</p>
+                    </a>
+                </li>
+                <li class="nav-header">Etc</li>
                 <li class="nav-item">
                     <a href="{{ route('login.create') }}" class="nav-link">
                         <i class="nav-icon bi bi-box-arrow-right"></i>

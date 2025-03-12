@@ -10,8 +10,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Index</li>
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}"><i class="bi bi-house"></i></a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                     </ol>
                 </div>
             </div>

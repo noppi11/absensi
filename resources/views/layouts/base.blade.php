@@ -27,6 +27,8 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}" />
+    {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> --}}
+    <link rel="stylesheet" href="{{ asset('jquery/jquery.dataTables.min.css') }}">
     <!--end::Required Plugin(AdminLTE)-->
     @yield('styles')
 </head>
@@ -64,7 +66,7 @@
     </div>
     <!--end::App Wrapper-->
     <!--begin::Script-->
-    @stack('script')
+    @stack('scripts')
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
     <!--end::Third Party Plugin(OverlayScrollbars)--><!--begin::Required Plugin(popperjs for Bootstrap 5)-->

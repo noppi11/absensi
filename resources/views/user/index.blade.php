@@ -195,8 +195,6 @@
         </div>
     </div>
 </div>
-<<<<<<< HEAD
-=======
 <!-- Modal Edit Pengguna -->
 <div class="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="modalEditUserLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -247,7 +245,6 @@
     </div>
 </div>
 
->>>>>>> a5462b2 (update: jika users role siswa tambah kolom kelas)
 @endsection
 
 @push('scripts')

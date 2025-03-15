@@ -18,6 +18,12 @@
                 </li>
                 <li class="nav-header">Data Master</li>
                 <li class="nav-item">
+                    <a href="{{ route('user.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-people"></i>
+                        <p>Pengguna</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('kelas.index') }}" class="nav-link">
                         <i class="nav-icon bi bi-building"></i>
                         <p>Kelas</p>

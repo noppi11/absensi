@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('user', UserController::class);
+    //Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
 });
 
 

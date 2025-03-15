@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller; 
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
+
+
 
 
 class UserController extends Controller
@@ -22,21 +25,19 @@ class UserController extends Controller
     }
 
     public function store(Request $request)
-    {
-    $validator = Validator::make($request->all(), [
+{
+    $validator = \Validator::make($request->all(), [
         'name' => 'required',
-        'username' => 'required|unique:users',
-        'email' => 'required|email|unique:users',
+        'username' => 'required',
+        'email' => 'required',
         'password' => 'required|min:6',
-        'role' => 'required|in:guru,admin,siswa',
+        'role' => ['required', Rule::in(['guru', 'admin', 'siswa'])],
     ]);
 
-    if ($validator->fails()) {
-        if ($request->ajax()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        return redirect()->route('user.index')->withErrors($validator)->withInput();
-    }
+   // if ($validator->fails()) {
+     //   return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+    //}
+
     $user = User::create([
         'name' => $request->name,
         'username' => $request->username,
@@ -44,17 +45,29 @@ class UserController extends Controller
         'password' => Hash::make($request->password),
         'role' => $request->role,
     ]);
-    dd($user);
-    if ($request->ajax()) {
-        return response()->json([
-            'success' => true,
-            'message' => 'User berhasil ditambahkan',
-            'user' => $user
-        ]);
-    }
 
-    return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan');
+   // return response()->json(['success' => true, 'message' => 'User berhasil ditambahkan']);
+    return redirect()->route('user.index')->with('success', 'Data berhasil disimpan');
 }
+    public function edit(string $id)
+    {
+        $user = User::findOrFail($id);
+        //return view('user.edit', compact('user'));
+    }
+    public function update(Request $request, User $user)
+{
+    $request->validate([
+        'name' => 'required',
+        'username' => 'required|unique:users,username,' . $user->id,
+        'email' => 'required|email|unique:users,email,' . $user->id,
+        'role' => 'required|in:guru,admin,siswa',
+    ]);
+
+    $user->update($request->all());
+
+    return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
+}
+
     public function destroy($id)
     {
         User::findOrFail($id)->delete();

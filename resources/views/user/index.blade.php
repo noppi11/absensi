@@ -67,10 +67,13 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="d-flex">
-                                        <a href="{{ route('user.edit', $user->id) }}"
-                                            class="btn btn-sm btn-warning me-1">
+                                        <button class="btn btn-sm btn-warning me-1 btn-edit-user" data-bs-toggle="modal"
+                                            data-bs-target="#modalEditUser" data-id="{{ $user->id }}"
+                                            data-name="{{ $user->name }}" data-username="{{ $user->username }}"
+                                            data-email="{{ $user->email }}" data-role="{{ $user->role }}">
                                             <i class="bi bi-pencil"></i>
-                                        </a>
+                                        </button>
+
                                         <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
@@ -132,6 +135,47 @@
         </div>
     </div>
 </div>
+<!-- Modal Edit Pengguna -->
+<div class="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="modalEditUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditUserLabel">Edit Pengguna</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditUser" action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="edit-id" name="id">
+
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="edit-name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="edit-username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="edit-email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-role" class="form-label">Role</label>
+                        <select class="form-control" id="edit-role" name="role" required>
+                            <option value="admin">Admin</option>
+                            <option value="guru">Guru</option>
+                            <option value="siswa">Siswa</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -145,24 +189,27 @@
     });
 </script>
 <script>
-    $(document).on("submit", "#formTambahUser", function(e) {
-    e.preventDefault();
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".btn-edit-user").forEach(button => {
+            button.addEventListener("click", function () {
+                let userId = this.getAttribute("data-id");
+                let name = this.getAttribute("data-name");
+                let username = this.getAttribute("data-username");
+                let email = this.getAttribute("data-email");
+                let role = this.getAttribute("data-role");
 
-    $.ajax({
-        url: "{{ route('user.store') }}",
-        type: "POST",
-        data: $(this).serialize(),
-        success: function(response) {
-            if (response.success) {
-                alert(response.message);
-                location.reload(); 
-            }
-        },
-        error: function(xhr) {
-            alert("Terjadi kesalahan, cek kembali input Anda.");
-        }
+                // Isi modal dengan data dari button
+                document.getElementById("edit_user_id").value = userId;
+                document.getElementById("edit_name").value = name;
+                document.getElementById("edit_username").value = username;
+                document.getElementById("edit_email").value = email;
+                document.getElementById("edit_role").value = role;
+
+                // Ubah action form agar sesuai dengan user yang diedit
+                document.getElementById("formEditUser").action = "/user/" + userId;
+            });
+        });
     });
-});
-
 </script>
+
 @endpush

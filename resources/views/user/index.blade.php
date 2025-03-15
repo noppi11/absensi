@@ -208,11 +208,11 @@
                 let role = this.getAttribute("data-role");
 
                 // Isi modal dengan data dari button
-                document.getElementById("edit_user_id").value = userId;
-                document.getElementById("edit_name").value = name;
-                document.getElementById("edit_username").value = username;
-                document.getElementById("edit_email").value = email;
-                document.getElementById("edit_role").value = role;
+                document.getElementById("edit-id").value = userId;
+                document.getElementById("edit-name").value = name;
+                document.getElementById("edit-username").value = username;
+                document.getElementById("edit-email").value = email;
+                document.getElementById("edit-role").value = role;
 
                 // Ubah action form agar sesuai dengan user yang diedit
                 document.getElementById("formEditUser").action = "/user/" + userId;

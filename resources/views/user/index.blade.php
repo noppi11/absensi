@@ -70,7 +70,7 @@
                                         <button class="btn btn-sm btn-warning me-1 btn-edit-user" data-bs-toggle="modal"
                                             data-bs-target="#modalEditUser" data-id="{{ $user->id }}"
                                             data-name="{{ $user->name }}" data-username="{{ $user->username }}"
-                                            data-email="{{ $user->email }}" data-role="{{ $user->role }}">
+                                            data-email="{{ $user->email }}" data-role="{{ $user->role }}" data-id-kelas="{{ $user->id_kelas ?? null }}">
                                             <i class="bi bi-pencil"></i>
                                         </button>
 
@@ -156,6 +156,24 @@
                 <form id="formTambahUser" action="{{ route('user.store') }}" method="POST">
                     @csrf
                     <div class="mb-3">
+                        <label for="role" class="form-label">Role</label>
+                        <select class="form-control" id="role" name="role" required>
+                            <option value="">Silahkan Pilih</option>
+                            <option value="admin">Admin</option>
+                            <option value="guru">Guru</option>
+                            <option value="siswa">Siswa</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="kelasForm" style="display: none;">
+                        <label for="kelas" class="form-label">Kelas</label>
+                        <select class="form-control" id="kelas" name="id_kelas">
+                            <option value="">Pilih Kelas</option>
+                            @foreach ($kelas as $v)
+                                <option value="{{ $v->id }}">{{ $v->nama_kelas }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="name" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="name" name="name" required>
                     </div>
@@ -171,20 +189,65 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="role" class="form-label">Role</label>
-                        <select class="form-control" id="role" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="guru">Guru</option>
-                            <option value="siswa">Siswa</option>
-                        </select>
-                    </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+<!-- Modal Edit Pengguna -->
+<div class="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="modalEditUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditUserLabel">Edit Pengguna</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditUser" action="" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" id="edit-id" name="id">
+
+                    <div class="mb-3">
+                        <label for="edit-role" class="form-label">Role</label>
+                        <select class="form-control" id="edit-role" name="role" required>
+                            <option value="admin">Admin</option>
+                            <option value="guru">Guru</option>
+                            <option value="siswa">Siswa</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="kelasFormEdit" style="display: none;">
+                        <label for="edit-kelas" class="form-label">Kelas</label>
+                        <select class="form-control" id="edit-kelas" name="id_kelas">
+                            <option value="">Pilih Kelas</option>
+                            @foreach ($kelas as $v)
+                                <option value="{{ $v->id }}">{{ $v->nama_kelas }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-name" class="form-label">Nama</label>
+                        <input type="text" class="form-control" id="edit-name" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="edit-username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit-email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="edit-email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+>>>>>>> a5462b2 (update: jika users role siswa tambah kolom kelas)
 @endsection
 
 @push('scripts')
@@ -206,6 +269,7 @@
                 let username = this.getAttribute("data-username");
                 let email = this.getAttribute("data-email");
                 let role = this.getAttribute("data-role");
+                let id_kelas = this.getAttribute("data-id-kelas");
 
                 // Isi modal dengan data dari button
                 document.getElementById("edit-id").value = userId;
@@ -216,8 +280,43 @@
 
                 // Ubah action form agar sesuai dengan user yang diedit
                 document.getElementById("formEditUser").action = "/user/" + userId;
+
+                // Cek jika role adalah "siswa" => tampilkan form kelas
+                const kelasFormEdit = document.getElementById('kelasFormEdit');
+                const selectKelas = document.getElementById('edit-kelas');
+
+                if (role === 'siswa') {
+                    kelasFormEdit.style.display = 'block';
+                    selectKelas.value = id_kelas;
+                } else {
+                    kelasFormEdit.style.display = 'none';
+                }
             });
         });
+    });
+
+    // jika role yang dipilih adalah siswa
+    document.getElementById('role').addEventListener('change', function() {
+        const role = this.value;
+        const kelasForm = document.getElementById('kelasForm');
+
+        if (role === 'siswa') {
+            kelasForm.style.display = 'block';
+        } else {
+            kelasForm.style.display = 'none';
+        }
+    });
+
+    // Event change saat role diganti
+    document.getElementById('edit-role').addEventListener('change', function () {
+        const role = this.value;
+        const kelasFormEdit = document.getElementById('kelasFormEdit');
+
+        if (role === 'siswa') {
+            kelasFormEdit.style.display = 'block';
+        } else {
+            kelasFormEdit.style.display = 'none';
+        }
     });
 </script>
 

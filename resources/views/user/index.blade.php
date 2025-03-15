@@ -74,6 +74,56 @@
                                             <i class="bi bi-pencil"></i>
                                         </button>
 
+                                        <!-- Modal Edit Pengguna -->
+                                        <div class="modal fade" id="modalEditUser" tabindex="-1"
+                                            aria-labelledby="modalEditUserLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalEditUserLabel">Edit Pengguna
+                                                        </h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="formEditUser" action="" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" id="edit-id" name="id">
+
+                                                            <div class="mb-3">
+                                                                <label for="edit-name" class="form-label">Nama</label>
+                                                                <input type="text" class="form-control" id="edit-name"
+                                                                    name="name" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="edit-username"
+                                                                    class="form-label">Username</label>
+                                                                <input type="text" class="form-control"
+                                                                    id="edit-username" name="username" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="edit-email" class="form-label">Email</label>
+                                                                <input type="email" class="form-control" id="edit-email"
+                                                                    name="email" required>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="edit-role" class="form-label">Role</label>
+                                                                <select class="form-control" id="edit-role" name="role"
+                                                                    required>
+                                                                    <option value="admin">Admin</option>
+                                                                    <option value="guru">Guru</option>
+                                                                    <option value="siswa">Siswa</option>
+                                                                </select>
+                                                            </div>
+                                                            <button type="submit" class="btn btn-primary">Simpan
+                                                                Perubahan</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <form action="{{ route('user.destroy', $user->id) }}" method="POST">
                                             @csrf
                                             @method('delete')
@@ -135,47 +185,6 @@
         </div>
     </div>
 </div>
-<!-- Modal Edit Pengguna -->
-<div class="modal fade" id="modalEditUser" tabindex="-1" aria-labelledby="modalEditUserLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalEditUserLabel">Edit Pengguna</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formEditUser" action="" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <input type="hidden" id="edit-id" name="id">
-
-                    <div class="mb-3">
-                        <label for="edit-name" class="form-label">Nama</label>
-                        <input type="text" class="form-control" id="edit-name" name="name" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="edit-username" name="username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="edit-email" name="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="edit-role" class="form-label">Role</label>
-                        <select class="form-control" id="edit-role" name="role" required>
-                            <option value="admin">Admin</option>
-                            <option value="guru">Guru</option>
-                            <option value="siswa">Siswa</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 @endsection
 
 @push('scripts')

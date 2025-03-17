@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.css') }}" />
     {{-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"> --}}
     <link rel="stylesheet" href="{{ asset('jquery/jquery.dataTables.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--end::Required Plugin(AdminLTE)-->
     @yield('styles')
 </head>

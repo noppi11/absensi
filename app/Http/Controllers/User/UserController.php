@@ -28,6 +28,10 @@ class UserController extends Controller
             'username' => 'required',
             'id_kelas' => 'nullable',
             'email' => 'required',
+            'nis' => 'nullable|string|max:20',
+            'alamat' => 'nullable|string',
+            'tempat_lahir' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
             'password' => 'required',
             'role' => 'required',
         ]);
@@ -37,6 +41,10 @@ class UserController extends Controller
             'username' => $request->username,
             'id_kelas' => $request->id_kelas ?? null,
             'email' => $request->email,
+            'nis' => $request->nis,
+            'alamat' => $request->alamat,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
@@ -52,17 +60,31 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'role' => 'required|in:guru,admin,siswa',
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'nis' => 'nullable|string|max:20', 
+        'alamat' => 'nullable|string|max:255', 
+        'tempat_lahir' => 'nullable|string|max:255',
+        'tanggal_lahir' => 'nullable|date',
+        'role' => 'required|in:guru,admin,siswa',
+    ]);
 
-        $user->update($request->all());
+    $user->update([
+        'name' => $request->name,
+        'username' => $request->username,
+        'email' => $request->email,
+        'role' => $request->role,
+        'nis' => $request->role === 'siswa' ? $request->nis : null,
+        'alamat' => $request->role === 'siswa' ? $request->alamat : null,
+        'tempat_lahir' => $request->role === 'siswa' ? $request->tempat_lahir : null,
+        'tanggal_lahir' => $request->role === 'siswa' ? $request->tanggal_lahir : null,
+    ]);
 
-        return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
+    return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
     }
+
 
     public function destroy($id)
     {

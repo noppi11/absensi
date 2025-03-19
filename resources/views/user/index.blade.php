@@ -229,12 +229,13 @@
                     </div>
                     <div class="mb-3" id="kelasForm" style="display: none;">
                         <label for="kelas" class="form-label">Kelas</label>
-                        <select class="form-control" id="kelas" name="id_kelas">
-                            <option value="">Pilih Kelas</option>
-                            @foreach ($kelas as $v)
+                        <select class="form-control" id="kelas" name="id_kelas" required>
+                        <option value="">Pilih Kelas</option>
+                        @foreach ($kelas as $v)
                             <option value="{{ $v->id }}">{{ $v->nama_kelas }}</option>
-                            @endforeach
-                        </select>
+                        @endforeach
+                    </select>
+
 
                     </div>
                     <div class="row">
@@ -298,7 +299,19 @@
 <!-- jQuery & DataTables -->
 <script src="{{ asset('jquery/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('jquery/jquery.dataTables.min.js') }}"></script>
+<script>
+    document.getElementById("role").addEventListener("change", function () {
+    var role = this.value;
+    var kelasForm = document.getElementById("kelasForm");
 
+    if (role === "siswa") {
+        kelasForm.style.display = "block";
+    } else {
+        kelasForm.style.display = "none";
+    }
+});
+
+</script>
 <script>
     $(document).ready(function () {
         $('#table-user').DataTable();
@@ -370,66 +383,65 @@
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-    // Event listener untuk tombol edit user
-    document.querySelectorAll(".btn-edit-user").forEach(button => {
-        button.addEventListener("click", function () {
-            let userId = this.dataset.id;
-            let name = this.dataset.name;
-            let username = this.dataset.username;
-            let email = this.dataset.email;
-            let role = this.dataset.role;
-            let id_kelas = this.dataset.idKelas || "";
-            let nis = this.dataset.nis || "";
-            let alamat = this.dataset.alamat || "";
-            let tempatLahir = this.dataset.tempatLahir || "";
-            let tanggalLahir = this.dataset.tanggalLahir || "";
+        // Event listener untuk tombol edit user
+        document.querySelectorAll(".btn-edit-user").forEach(button => {
+            button.addEventListener("click", function () {
+                let userId = this.dataset.id;
+                let name = this.dataset.name;
+                let username = this.dataset.username;
+                let email = this.dataset.email;
+                let role = this.dataset.role;
+                let id_kelas = this.dataset.idKelas || "";
+                let nis = this.dataset.nis || "";
+                let alamat = this.dataset.alamat || "";
+                let tempatLahir = this.dataset.tempatLahir || "";
+                let tanggalLahir = this.dataset.tanggalLahir || "";
 
-            // Isi form edit dengan data yang diambil
-            document.getElementById("edit-id").value = userId;
-            document.getElementById("edit-name").value = name;
-            document.getElementById("edit-username").value = username;
-            document.getElementById("edit-email").value = email;
-            document.getElementById("edit-role").value = role;
-            document.getElementById("formEditUser").action = "/user/" + userId;
+                // Isi form edit dengan data yang diambil
+                document.getElementById("edit-id").value = userId;
+                document.getElementById("edit-name").value = name;
+                document.getElementById("edit-username").value = username;
+                document.getElementById("edit-email").value = email;
+                document.getElementById("edit-role").value = role;
+                document.getElementById("formEditUser").action = "/user/" + userId;
 
-            // Jika role siswa, tampilkan input tambahan
-            toggleStudentFields(role, "edit");
+                // Jika role siswa, tampilkan input tambahan
+                toggleStudentFields(role, "edit");
 
-            if (role === 'siswa') {
-                document.getElementById('edit-kelas').value = id_kelas;
-                document.getElementById('edit-nis').value = nis;
-                document.getElementById('edit-alamat').value = alamat;
-                document.getElementById('edit-tempat_lahir').value = tempatLahir;
-                document.getElementById('edit-tanggal_lahir').value = tanggalLahir;
-            }
+                if (role === 'siswa') {
+                    document.getElementById('edit-kelas').value = id_kelas;
+                    document.getElementById('edit-nis').value = nis;
+                    document.getElementById('edit-alamat').value = alamat;
+                    document.getElementById('edit-tempat_lahir').value = tempatLahir;
+                    document.getElementById('edit-tanggal_lahir').value = tanggalLahir;
+                }
+            });
         });
-    });
 
-    // Event listener untuk form tambah user
-    document.getElementById('role').addEventListener('change', function () {
-        toggleStudentFields(this.value, "add");
-    });
-
-    // Event listener untuk form edit user
-    document.getElementById('edit-role').addEventListener('change', function () {
-        toggleStudentFields(this.value, "edit");
-    });
-
-    // Fungsi untuk menampilkan/menyembunyikan form tambahan siswa
-    function toggleStudentFields(role, mode) {
-        let prefix = mode === "edit" ? "edit-" : "";
-
-        let fields = ["kelasForm", "nisForm", "alamatForm", "tempatLahirForm", "tanggalLahirForm"];
-
-        fields.forEach(field => {
-            let element = document.getElementById(prefix + field);
-            if (element) {
-                element.style.display = (role === "siswa") ? "block" : "none";
-            }
+        // Event listener untuk form tambah user
+        document.getElementById('role').addEventListener('change', function () {
+            toggleStudentFields(this.value, "add");
         });
-    }
-});
 
+        // Event listener untuk form edit user
+        document.getElementById('edit-role').addEventListener('change', function () {
+            toggleStudentFields(this.value, "edit");
+        });
+
+        // Fungsi untuk menampilkan/menyembunyikan form tambahan siswa
+        function toggleStudentFields(role, mode) {
+            let prefix = mode === "edit" ? "edit-" : "";
+
+            let fields = ["kelasForm", "nisForm", "alamatForm", "tempatLahirForm", "tanggalLahirForm"];
+
+            fields.forEach(field => {
+                let element = document.getElementById(prefix + field);
+                if (element) {
+                    element.style.display = (role === "siswa") ? "block" : "none";
+                }
+            });
+        }
+    });
 </script>
 
 @endpush

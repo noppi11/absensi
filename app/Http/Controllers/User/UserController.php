@@ -18,7 +18,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $kelas = Kelas::all(); 
+        return view('user.create', compact('kelas'));
     }
 
     public function store(Request $request)
@@ -26,7 +27,7 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'username' => 'required',
-            'id_kelas' => 'nullable',
+            'id_kelas' => 'nullable|exists:kelas,id',
             'email' => 'required',
             'nis' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
@@ -39,7 +40,7 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'username' => $request->username,
-            'id_kelas' => $request->id_kelas ?? null,
+            'id_kelas' => $request->id_kelas ? (int) $request->id_kelas : null,
             'email' => $request->email,
             'nis' => $request->nis,
             'alamat' => $request->alamat,
@@ -51,10 +52,23 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'Data berhasil disimpan');
     }
+    public function show($id_kelas)
+    {
+    $kelas = Kelas::findOrFail($id_kelas);
+    $siswa = User::where('id_kelas', $id_kelas)
+                 ->where('role', 'siswa') 
+                 ->get();
 
+    return view('data.xira', compact('kelas', 'siswa'));
+    }
+    public function xira()
+    {
+        return view('data.xira'); 
+    }
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
+        $kelas = Kelas::all();
         //return view('user.edit', compact('user'));
     }
 

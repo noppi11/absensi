@@ -20,4 +20,8 @@ class Kelas extends Model
     {
         return $this->belongsTo(User::class, 'id_wali_kelas', 'id');
     }
+    public function siswa()
+    {
+        return $this->hasMany(User::class, 'id_kelas');
+    }
 }

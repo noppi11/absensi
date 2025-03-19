@@ -29,7 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('kelas', KelasController::class);
     Route::resource('user', UserController::class);
+   // Route::get('/rekayasa_perangkat_lunak/data_siswa/kelas/{id_kelas}', [KelasController::class, 'show'])->name('kelas.show');
     //Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
+    //Route::get('/data/xira', function () { return view('data.xira'); })->name('xira.index');
+    Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
+
+
+    
 });
 
 

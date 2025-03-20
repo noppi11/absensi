@@ -54,12 +54,13 @@ class UserController extends Controller
     }
     public function show($id_kelas)
     {
-    $kelas = Kelas::findOrFail($id_kelas);
-    $siswa = User::where('id_kelas', $id_kelas)
-                 ->where('role', 'siswa') 
-                 ->get();
+        $kelas = Kelas::where('nama_kelas', 'X RA')->first();
+        $siswa = User::where('id_kelas', $kelas->id)
+                    ->where('role', 'siswa') 
+                    ->get();
+        dd($siswa);
 
-    return view('data.xira', compact('kelas', 'siswa'));
+        return view('data.xira', compact('kelas', 'siswa'));
     }
     public function xira()
     {

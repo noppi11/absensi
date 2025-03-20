@@ -108,17 +108,19 @@ class KelasController extends Controller
         return redirect()->route('kelas.index')->with('success', 'Data berhasil dihapus'); // redirect setelah dihapus
     }
     public function xira()
-{
-    // Cari kelas XI RA berdasarkan nama_kelas
-    $kelas = Kelas::where('nama_kelas', 'XI RA')->first();
+    {
+        // Cari kelas XI RA berdasarkan nama_kelas
+        $kelas = Kelas::where('nama_kelas', 'XI RA')->first();
+        // dd($kelas);
 
-    // Jika kelas ditemukan, ambil semua siswa dalam kelas tersebut
-    $siswa = [];
-    if ($kelas) {
-        $siswa = User::where('role', 'siswa')->where('id_kelas', $kelas->id)->get();
+        // Jika kelas ditemukan, ambil semua siswa dalam kelas tersebut
+        $siswa = [];
+        if ($kelas) {
+            $siswa = User::where('role', 'siswa')->where('id_kelas', $kelas->id)->get();
+        }
+        // dd($siswa);
+
+        return view('data.xira', compact('siswa'));
     }
-
-    return view('data.xira', compact('siswa'));
-}
 
 }

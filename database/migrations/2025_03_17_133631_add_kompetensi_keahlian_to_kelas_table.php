@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('kelas', function (Blueprint $table) {
-            $table->string('kompetensi_keahlian', 10)->after('nama_kelas')->nullable();
-        });
+        // Schema::table('kelas', function (Blueprint $table) {
+        //     $table->string('kompetensi_keahlian', 10)->after('nama_kelas')->nullable();
+        // });
     }
 
     /**

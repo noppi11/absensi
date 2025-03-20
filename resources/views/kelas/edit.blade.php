@@ -33,6 +33,10 @@
                                 <input name="nama_kelas" type="text" class="form-control" value="{{ $kelas->nama_kelas }}">
                             </div>
                             <div class="mb-3">
+                                <label class="form-label">Kompetensi Keahlian</label>
+                                <input name="kompetensi_keahlian" type="text" class="form-control" value="{{ $kelas->kompetensi_keahlian }}">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">Wali Kelas</label>
                                 <select name="id_wali_kelas" class="form-control">
                                     <option value="">Silahkan Pilih</option>

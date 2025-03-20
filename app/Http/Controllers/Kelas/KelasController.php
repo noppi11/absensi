@@ -38,11 +38,13 @@ class KelasController extends Controller
     {
         $request->validate([ // validasi bahwa form harus wajib diisi
             'nama_kelas' => 'required',
+            'kompetensi_keahlian' => 'required',
             'id_wali_kelas' => 'required'
         ]);
 
         Kelas::create([ // menyimpan form ke tabel kelas
             'nama_kelas' => $request->nama_kelas,
+            'kompetensi_keahlian' => $request->kompetensi_keahlian,
             'id_wali_kelas' => $request->id_wali_kelas
         ]);
 
@@ -78,12 +80,14 @@ class KelasController extends Controller
         // validasi data harus wajib diisi 
         $request->validate([
             'nama_kelas' => 'required',
+            'kompetensi_keahlian' => 'required',
             'id_wali_kelas' => 'required'
         ]);
 
         // mengambil data dari form
         $data = [
             'nama_kelas' => $request->nama_kelas,
+            'kompetensi_keahlian' => $request->kompetensi_keahlian,
             'id_wali_kelas' => $request->id_wali_kelas
         ];
 

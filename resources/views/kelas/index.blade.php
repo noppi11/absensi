@@ -38,6 +38,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Kelas</th>
+                                    <th>Kompetensi Keahlian</th>
                                     <th>Wali Kelas</th>
                                     <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -47,6 +48,7 @@
                                     <tr>
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $v->nama_kelas }}</td>
+                                        <td>{{ $v->kompetensi_keahlian }}</td>
                                         <td>{{ $v->user->name }}</td>
                                         <td class="text-center">
                                             <div class="d-flex">

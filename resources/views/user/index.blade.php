@@ -300,6 +300,11 @@
 <script src="{{ asset('jquery/jquery-3.6.0.min.js') }}"></script>
 <script src="{{ asset('jquery/jquery.dataTables.min.js') }}"></script>
 <script>
+$('#modalTambahUser').on('shown.bs.modal', function () {
+    console.log('Modal terbuka!');
+});
+</script>
+<script>
     document.getElementById("role").addEventListener("change", function () {
     var role = this.value;
     var kelasForm = document.getElementById("kelasForm");
@@ -443,5 +448,12 @@
         }
     });
 </script>
-
+<script>
+    $(document).ready(function() {
+    $('#formTambahUser ').on('submit', function(e) {
+        e.preventDefault();
+        // Logika untuk menyimpan data
+    });
+});
+</script>
 @endpush

@@ -49,7 +49,7 @@
                                         <td>{{ $key + 1 }}</td>
                                         <td>{{ $v->nama_kelas }}</td>
                                         <td>{{ $v->kompetensi_keahlian }}</td>
-                                        <td>{{ $v->user->name }}</td>
+                                        {{-- <td>{{ $v->user->name }}</td> --}}
                                         <td class="text-center">
                                             <div class="d-flex">
                                                 <a href="{{ route('kelas.edit', $v->id) }}" class="btn btn-sm btn-warning me-1"><i class="bi bi-pencil"></i></a>

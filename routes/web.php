@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function () {
     //Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     //Route::get('/data/xira', function () { return view('data.xira'); })->name('xira.index');
     Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
+
 
 
     

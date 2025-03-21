@@ -54,7 +54,7 @@ class UserController extends Controller
     }
     public function show($id_kelas)
     {
-        $kelas = Kelas::where('nama_kelas', 'X RA')->first();
+        $kelas = Kelas::where('nama_kelas', 'XI RA')->first();
         $siswa = User::where('id_kelas', $kelas->id)
                     ->where('role', 'siswa') 
                     ->get();

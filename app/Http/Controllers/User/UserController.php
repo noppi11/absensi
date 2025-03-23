@@ -27,17 +27,14 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'username' => 'required',
-<<<<<<< HEAD
             'id_kelas' => 'nullable|exists:kelas,id',
             'email' => 'required',
             'nis' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
             'tempat_lahir' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
-=======
             'id_kelas' => 'nullable',
             'email' => 'required',
->>>>>>> 50ba7643dcc8eacf9515ec2bd13ab0959fa434a9
             'password' => 'required',
             'role' => 'required',
         ]);
@@ -45,24 +42,20 @@ class UserController extends Controller
         User::create([
             'name' => $request->name,
             'username' => $request->username,
-<<<<<<< HEAD
             'id_kelas' => $request->id_kelas ? (int) $request->id_kelas : null,
             'email' => $request->email,
             'nis' => $request->nis,
             'alamat' => $request->alamat,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
-=======
             'id_kelas' => $request->id_kelas ?? null,
             'email' => $request->email,
->>>>>>> 50ba7643dcc8eacf9515ec2bd13ab0959fa434a9
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
 
         return redirect()->route('user.index')->with('success', 'Data berhasil disimpan');
     }
-<<<<<<< HEAD
     public function show($id_kelas)
     {
         $kelas = Kelas::where('nama_kelas', 'XI RA')->first();
@@ -77,9 +70,6 @@ class UserController extends Controller
     {
         return view('data.xira'); 
     }
-=======
-
->>>>>>> 50ba7643dcc8eacf9515ec2bd13ab0959fa434a9
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
@@ -89,7 +79,6 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-<<<<<<< HEAD
     $request->validate([
         'name' => 'required|string|max:255',
         'username' => 'required|string|max:255|unique:users,username,' . $user->id,
@@ -114,8 +103,6 @@ class UserController extends Controller
 
     return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
     }
-
-=======
         $request->validate([
             'name' => 'required',
             'username' => 'required|unique:users,username,' . $user->id,
@@ -127,7 +114,6 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
     }
->>>>>>> 50ba7643dcc8eacf9515ec2bd13ab0959fa434a9
 
     public function destroy($id)
     {

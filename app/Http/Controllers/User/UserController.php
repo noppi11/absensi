@@ -28,13 +28,11 @@ class UserController extends Controller
             'name' => 'required',
             'username' => 'required',
             'id_kelas' => 'nullable|exists:kelas,id',
-            'email' => 'required',
+            'email' => 'required|email',
             'nis' => 'nullable|string|max:20',
             'alamat' => 'nullable|string',
             'tempat_lahir' => 'nullable|string|max:255',
             'tanggal_lahir' => 'nullable|date',
-            'id_kelas' => 'nullable',
-            'email' => 'required',
             'password' => 'required',
             'role' => 'required',
         ]);
@@ -48,70 +46,44 @@ class UserController extends Controller
             'alamat' => $request->alamat,
             'tempat_lahir' => $request->tempat_lahir,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'id_kelas' => $request->id_kelas ?? null,
-            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
 
         return redirect()->route('user.index')->with('success', 'Data berhasil disimpan');
     }
-    public function show($id_kelas)
-    {
-        $kelas = Kelas::where('nama_kelas', 'XI RA')->first();
-        $siswa = User::where('id_kelas', $kelas->id)
-                    ->where('role', 'siswa') 
-                    ->get();
-        dd($siswa);
 
-        return view('data.xira', compact('kelas', 'siswa'));
-    }
-    public function xira()
-    {
-        return view('data.xira'); 
-    }
     public function edit(string $id)
     {
         $user = User::findOrFail($id);
         $kelas = Kelas::all();
-        //return view('user.edit', compact('user'));
+        return view('user.edit', compact('user', 'kelas'));
     }
 
     public function update(Request $request, User $user)
     {
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-        'nis' => 'nullable|string|max:20', 
-        'alamat' => 'nullable|string|max:255', 
-        'tempat_lahir' => 'nullable|string|max:255',
-        'tanggal_lahir' => 'nullable|date',
-        'role' => 'required|in:guru,admin,siswa',
-    ]);
-
-    $user->update([
-        'name' => $request->name,
-        'username' => $request->username,
-        'email' => $request->email,
-        'role' => $request->role,
-        'nis' => $request->role === 'siswa' ? $request->nis : null,
-        'alamat' => $request->role === 'siswa' ? $request->alamat : null,
-        'tempat_lahir' => $request->role === 'siswa' ? $request->tempat_lahir : null,
-        'tanggal_lahir' => $request->role === 'siswa' ? $request->tanggal_lahir : null,
-    ]);
-
-    return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
-    }
         $request->validate([
-            'name' => 'required',
-            'username' => 'required|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'nis' => 'nullable|string|max:20', 
+            'alamat' => 'nullable|string|max:255', 
+            'tempat_lahir' => 'nullable|string|max:255',
+            'tanggal_lahir' => 'nullable|date',
             'role' => 'required|in:guru,admin,siswa',
         ]);
 
-        $user->update($request->all());
-
+        $user->update([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'role' => $request->role,
+            'nis' => $request->role === 'siswa' ? $request->nis : null,
+            'alamat' => $request->role === 'siswa' ? $request->alamat : null,
+            'tempat_lahir' => $request->role === 'siswa' ? $request->tempat_lahir : null,
+            'tanggal_lahir' => $request->role === 'siswa' ? $request->tanggal_lahir : null,
+        ]);
+        
         return redirect()->route('user.index')->with('success', 'User berhasil diperbarui');
     }
 

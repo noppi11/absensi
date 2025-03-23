@@ -35,9 +35,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 
-
-
-    
 });
 
 

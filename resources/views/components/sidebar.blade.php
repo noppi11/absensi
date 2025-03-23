@@ -1,6 +1,4 @@
-@php
-$kelasList = \App\Models\Kelas::all();
-@endphp
+{{-- @dd($kopentensis) --}}
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
         <a href="../index.html" class="brand-link">
@@ -41,38 +39,38 @@ $kelasList = \App\Models\Kelas::all();
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-laptop-code nav-icon"></i>
-                                <p>
-                                    Rekayasa Perangkat Lunak
-                                    <i class="fas fa-angle-left right ml-3"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="{{ route('kelas.xira') }}" class="nav-link">
-                                        <i class="fas fa-users nav-icon"></i>
-                                        <p>Kelas XI RA</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-tag nav-icon"></i>
-
-                                        <p>Kelas XI RPL B</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="fas fa-tag nav-icon"></i>
-
-                                        <p>Kelas XI RPL C</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
+                        @foreach ($kopetensis as $item)
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="fas fa-laptop-code nav-icon"></i>
+                                    <p>
+                                        {{ $item->name }}
+                                        <i class="fas fa-angle-left right ml-3"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    @forelse ($item->classs as $kls)
+                                        <li class="nav-item">
+                                            <a href="/kelas/{{ $kls->id }}" class="nav-link">
+                                                <i class="fas fa-users nav-icon"></i>
+                                                <p>{{ $kls->nama_kelas }}</p>
+                                            </a>
+                                        </li>
+                                    @empty
+                                        <p>KOsong</p>
+                                    @endforelse
+                                    {{-- @foreach ($kelas as $kls)
+                                    <li class="nav-item">
+                                        <a href="/kelas/{{ $kls->id }}" class="nav-link">
+                                            <i class="fas fa-users nav-icon"></i>
+                                            <p>{{ $kls->nama_kelas }}</p>
+                                        </a>
+                                    </li>
+                                    @endforeach --}}
+                                </ul>
+                            </li>
+                        @endforeach
+                        
                     </ul>
                 </li>
 

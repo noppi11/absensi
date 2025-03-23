@@ -43,7 +43,7 @@
         @include('layouts.navbar')
         <!--end::Header-->
         <!--begin::Sidebar-->
-        @include('layouts.sidebar')
+        <x-sidebar/>
         <!--end::Sidebar-->
         <!--begin::App Main-->
         <main class="app-main">

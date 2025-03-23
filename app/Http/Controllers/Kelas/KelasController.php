@@ -14,7 +14,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $dataKelas = Kelas::all(); // mengambil semua data yang ada di tabel kelas
+        $dataKelas = Kelas::with(['user'])->get(); // mengambil semua data yang ada di tabel kelas
         return view('kelas.index', [ // pindah ke halaman ke view kelas.index
             'dataKelas' => $dataKelas
         ]);
@@ -56,7 +56,9 @@ class KelasController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $class = Kelas::where("id", $id)->with(["students"])->first();
+        $students = $class->students;
+        return view("kelas.show", ["students" => $students]);
     }
 
     /**
@@ -122,5 +124,6 @@ class KelasController extends Controller
 
         return view('data.xira', compact('siswa'));
     }
+
 
 }

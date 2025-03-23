@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nama_kelas', 10);
             $table->string('kompetensi_keahlian', 10);
             $table->foreignId('id_wali_kelas')->nullable()->references('id')->on('users');
+            $table->foreignId("id_kopetensi")->nullable()->constrained("kopetensis")->onDelete("cascade");
             $table->timestamps();
         });
     }

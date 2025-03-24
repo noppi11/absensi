@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Kelas\KelasController;
+use App\Http\Controllers\KopetensiController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 
+    Route::get("/kopetensis", [KopetensiController::class, "index"])->name("kopetensis");
+    Route::post("/kopetensis", [KopetensiController::class, "store"])->name("kopetensis.store");
+    Route::put("/kopetensis/{kopetensi}", [KopetensiController::class, "update"])->name("kopetensis.update");
+    Route::delete("/kopetensis/{kopetensi}", [KopetensiController::class, "destroy"])->name("kopetensis.destroy");
 });
 
 

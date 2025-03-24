@@ -22,8 +22,13 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Teknik Ototronik',
                 'slug' => "teknik-ototronik"
             ],
+            [
+                'Teknik-Tekstil',
+                "slug" => "teknik-tekstil"
+            ]
         ]);
         $this->call(KelasSeeder::class);
         $this->call(UserSeeder::class);
+        \App\Models\Kelas::query()->update(['id_wali_kelas' => 2]);
     }
 }

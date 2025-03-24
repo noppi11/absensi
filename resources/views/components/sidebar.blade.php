@@ -31,6 +31,12 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('kopetensis') }}" class="nav-link">
+                        <i class="nav-icon bi bi-building"></i>
+                        <p>Kopetensi</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
@@ -57,16 +63,13 @@
                                             </a>
                                         </li>
                                     @empty
-                                        <p>KOsong</p>
+                                        <li class="nav-item">
+                                            <a href="#" class="nav-link" disabled>
+                                                <i class="fas fa-users nav-icon"></i>
+                                                <p class="text-warning">Kpn yh.</p>
+                                            </a>
+                                        </li>
                                     @endforelse
-                                    {{-- @foreach ($kelas as $kls)
-                                    <li class="nav-item">
-                                        <a href="/kelas/{{ $kls->id }}" class="nav-link">
-                                            <i class="fas fa-users nav-icon"></i>
-                                            <p>{{ $kls->nama_kelas }}</p>
-                                        </a>
-                                    </li>
-                                    @endforeach --}}
                                 </ul>
                             </li>
                         @endforeach

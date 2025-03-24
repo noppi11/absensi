@@ -15,7 +15,8 @@ class Kelas extends Model
     protected $fillable = [
         'nama_kelas',
         'kompetensi_keahlian',
-        'id_wali_kelas'
+        'id_wali_kelas',
+        'id_kopetensi'
     ];
 
     public function user()
@@ -33,6 +34,6 @@ class Kelas extends Model
      */
     public function kopetensi(): BelongsTo
     {
-        return $this->belongsTo(Kopetensi::class, "id_kopetensi");
+        return $this->belongsTo(Kopetensi::class, 'id_kopetensi');
     }
 }

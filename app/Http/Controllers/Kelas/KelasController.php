@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Kelas;
 
 use App\Http\Controllers\Controller;
 use App\Models\Kelas;
+use App\Models\Kopetensi;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -57,8 +58,13 @@ class KelasController extends Controller
     public function show(string $id)
     {
         $class = Kelas::where("id", $id)->with(["students"])->first();
-        $students = $class->students;
-        return view("kelas.show", ["students" => $students]);
+        if (!$class) {
+            abort(404, "Kelas tidak ditemukan.");
+        }
+        return view("kelas.show", [
+            "students" => $class->students,
+            "kelas" => $class 
+        ]);
     }
 
     /**
@@ -125,5 +131,49 @@ class KelasController extends Controller
         return view('data.xira', compact('siswa'));
     }
 
+    public function indexKopetensi()
+{
+    $kopetensis = Kopetensi::with('kelas')->get();
+    return view('kopetensi.index', compact('kopetensis'));
+}
+
+
+    public function createKopetensi()
+    {
+        return view('kopetensi.create');
+    }
+
+    public function storeKopetensi(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:100',
+        ]);
+
+        Kopetensi::create($request->all());
+
+        return redirect()->route('kopetensi.index')->with('success', 'Kopetensi berhasil ditambahkan');
+    }
+
+    public function editKopetensi(Kopetensi $kopetensi)
+    {
+        return view('kopetensi.edit', compact('kopetensi'));
+    }
+
+    public function updateKopetensi(Request $request, Kopetensi $kopetensi)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:100',
+        ]);
+
+        $kopetensi->update($request->all());
+
+        return redirect()->route('kopetensi.index')->with('success', 'Kopetensi berhasil diperbarui');
+    }
+
+    public function destroyKopetensi(Kopetensi $kopetensi)
+    {
+        $kopetensi->delete();
+        return redirect()->route('kopetensi.index')->with('success', 'Kopetensi berhasil dihapus');
+    }
 
 }

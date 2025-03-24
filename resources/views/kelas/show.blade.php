@@ -5,12 +5,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
-                    <h3 class="mb-0">Daftar Siswa Kelas XI RA</h3>
+                <h3 class="mb-0">Daftar Siswa Kelas {{ $kelas->nama_kelas }}</h3>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-end">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}"><i class="bi bi-house"></i></a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Kelas XI RA</li>
+                        <li class="breadcrumb-item active" aria-current="page">Kelas {{ $kelas->nama_kelas }}</li>
                     </ol>
                 </div>
             </div>

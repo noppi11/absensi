@@ -35,6 +35,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 
+    // CRUD Kopetensi
+    Route::get('/kopetensi', [KelasController::class, 'indexKopetensi'])->name('kopetensi.index');
+    Route::get('/kopetensi/create', [KelasController::class, 'createKopetensi'])->name('kopetensi.create');
+    Route::post('/kopetensi', [KelasController::class, 'storeKopetensi'])->name('kopetensi.store');
+    Route::get('/kopetensi/{kopetensi}/edit', [KelasController::class, 'editKopetensi'])->name('kopetensi.edit');
+    Route::put('/kopetensi/{kopetensi}', [KelasController::class, 'updateKopetensi'])->name('kopetensi.update');
+    Route::delete('/kopetensi/{kopetensi}', [KelasController::class, 'destroyKopetensi'])->name('kopetensi.destroy');
+
+
 });
 
 

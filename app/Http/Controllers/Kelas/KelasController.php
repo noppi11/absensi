@@ -15,7 +15,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $dataKelas = Kelas::with(['user'])->get(); // mengambil semua data yang ada di tabel kelas
+        $dataKelas = Kelas::with(['user', 'kopetensi', 'students'])->get(); // mengambil semua data yang ada di tabel kelas
         return view('kelas.index', [ // pindah ke halaman ke view kelas.index
             'dataKelas' => $dataKelas
         ]);
@@ -28,7 +28,8 @@ class KelasController extends Controller
     {
         $waliKelas = User::where('role', 'guru')->get(); // mengambil users yang rolenya guru
         return view('kelas.create', [ // pindah ke halaman ke view kelas.create
-            'waliKelas' => $waliKelas
+            'waliKelas' => $waliKelas,
+            'kopetensis' => kopetensi :: all()
         ]);
     }
 
@@ -39,8 +40,9 @@ class KelasController extends Controller
     {
         $request->validate([ // validasi bahwa form harus wajib diisi
             'nama_kelas' => 'required',
-            'kompetensi_keahlian' => 'required',
-            'id_wali_kelas' => 'required'
+            'kompetensi_keahlian' => 'nullable',
+            'id_wali_kelas' => 'required',
+            'id_kopetensi' => 'required'
         ]);
 
         Kelas::create([ // menyimpan form ke tabel kelas
@@ -134,6 +136,7 @@ class KelasController extends Controller
     public function indexKopetensi()
 {
     $kopetensis = Kopetensi::with('kelas')->get();
+    dd($kopetensis);
     return view('kopetensi.index', compact('kopetensis'));
 }
 

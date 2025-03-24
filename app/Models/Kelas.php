@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Kelas extends Model
 {
     use HasFactory;
-
+    
     protected $table = 'kelas';
 
     protected $fillable = [
@@ -36,4 +36,5 @@ class Kelas extends Model
     {
         return $this->belongsTo(Kopetensi::class, 'id_kopetensi');
     }
+
 }

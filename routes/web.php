@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Kelas\KelasController;
+use App\Http\Controllers\KopetensiController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,12 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 
     // CRUD Kopetensi
-    Route::get('/kopetensi', [KelasController::class, 'indexKopetensi'])->name('kopetensi.index');
-    Route::get('/kopetensi/create', [KelasController::class, 'createKopetensi'])->name('kopetensi.create');
-    Route::post('/kopetensi', [KelasController::class, 'storeKopetensi'])->name('kopetensi.store');
-    Route::get('/kopetensi/{kopetensi}/edit', [KelasController::class, 'editKopetensi'])->name('kopetensi.edit');
-    Route::put('/kopetensi/{kopetensi}', [KelasController::class, 'updateKopetensi'])->name('kopetensi.update');
-    Route::delete('/kopetensi/{kopetensi}', [KelasController::class, 'destroyKopetensi'])->name('kopetensi.destroy');
+    Route::get("/kopetensis", [KopetensiController::class, "index"])->name("kopetensis");
+    Route::post("/kopetensis", [KopetensiController::class, "store"])->name("kopetensis.store");
+    Route::put("/kopetensis/{kopetensi}", [KopetensiController::class, "update"])->name("kopetensis.update");
+    Route::delete("/kopetensis/{kopetensi}", [KopetensiController::class, "destroy"])->name("kopetensis.destroy");
 
 
 });

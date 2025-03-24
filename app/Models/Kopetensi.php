@@ -13,10 +13,13 @@ class Kopetensi extends Model
     protected $guarded = [];
 
     /**
-     * Relasi ke model Kelas
+     * Get all of the classs for the Kopetensi
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function kelas(): HasMany
+    public function classs(): HasMany
     {
         return $this->hasMany(Kelas::class, 'id_kopetensi');
     }
 }
+

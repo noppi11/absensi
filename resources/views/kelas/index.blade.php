@@ -42,6 +42,7 @@
                                 <th>Kelas</th>
                                 <th>Kompetensi Keahlian</th>
                                 <th>Wali Kelas</th>
+                                <th>Jumlah Siswa</th>
                                 <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
                             </tr>
                         </thead>
@@ -50,8 +51,9 @@
                             <tr>
                                 <td>{{ $key + 1 }}</td>
                                 <td>{{ $v->nama_kelas }}</td>
-                                <td>{{ $v->kompetensi_keahlian }}</td>
+                                <td>{{ $v->kopetensi->name }}</td>
                                 <td>{{ $v->user?->name }}</td>
+                                <td>{{ $v->students->count() }}</td>
                                 <td class="text-center">
                                     <div class="d-flex">
                                         <a href="{{ route('kelas.edit', $v->id) }}"

@@ -46,37 +46,43 @@
                     </a>
                     <ul class="nav nav-treeview">
                         @foreach ($kopetensis as $item)
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">
-                                    <i class="fas fa-laptop-code nav-icon"></i>
-                                    <p>
-                                        {{ $item->name }}
-                                        <i class="fas fa-angle-left right ml-3"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    @forelse ($item->classs as $kls)
-                                        <li class="nav-item">
-                                            <a href="/kelas/{{ $kls->id }}" class="nav-link">
-                                                <i class="fas fa-tag nav-icon"></i>
-                                                <p>{{ $kls->nama_kelas }}</p>
-                                            </a>
-                                        </li>
-                                    @empty
-                                        <li class="nav-item">
-                                            <a href="#" class="nav-link" disabled>
-                                                <i class="fas fa-users nav-icon"></i>
-                                                <p class="text-warning">Tidak Ada Kelas</p>
-                                            </a>
-                                        </li>
-                                    @endforelse
-                                </ul>
-                            </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-laptop-code nav-icon"></i>
+                                <p>
+                                    {{ $item->name }}
+                                    <i class="fas fa-angle-left right ml-3"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @forelse ($item->classs as $kls)
+                                <li class="nav-item">
+                                    <a href="/kelas/{{ $kls->id }}" class="nav-link">
+                                        <i class="fas fa-tag nav-icon"></i>
+                                        <p>{{ $kls->nama_kelas }}</p>
+                                    </a>
+                                </li>
+                                @empty
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link" disabled>
+                                        <i class="fas fa-users nav-icon"></i>
+                                        <p class="text-warning">Tidak Ada Kelas</p>
+                                    </a>
+                                </li>
+                                @endforelse
+                            </ul>
+                        </li>
                         @endforeach
-                        
+
                     </ul>
                 </li>
-
+                <li class="nav-header">Absensi</li>
+                        <li class="nav-item">
+                            <a href="{{ route('absen.index') }}" class="nav-link">
+                                <i class="nav-icon bi bi-speedometer"></i>
+                                <p>Absen</p>
+                            </a>
+                        </li>
                 <li class="nav-header">Etc</li>
                 <li class="nav-item">
                     <a href="{{ route('login.create') }}" class="nav-link">

@@ -14,7 +14,7 @@ class Kelas extends Model
 
     protected $fillable = [
         'nama_kelas',
-        'kompetensi_keahlian',
+        // 'kompetensi_keahlian',
         'id_wali_kelas',
         'id_kopetensi'
     ];

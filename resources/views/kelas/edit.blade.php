@@ -32,9 +32,20 @@
                                 <label class="form-label">Kelas</label>
                                 <input name="nama_kelas" type="text" class="form-control" value="{{ $kelas->nama_kelas }}">
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <label class="form-label">Kompetensi Keahlian</label>
                                 <input name="kompetensi_keahlian" type="text" class="form-control" value="{{ $kelas->kompetensi_keahlian }}">
+                            </div> --}}
+                            <div class="mb-3">
+                                <label class="form-label">Kompetensi Keahlian</label>
+                                <select name="id_kopetensi" class="form-select" aria-label="Default select example">
+                                    <option disabled>Pilih Kompetensi Keahlian</option>
+                                    @foreach ($kopetensis as $kop)
+                                        <option value="{{ $kop->id }}" {{ $kop->id == $kelas->id_kopetensi ? 'selected' : '' }}>
+                                            {{ $kop->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Wali Kelas</label>

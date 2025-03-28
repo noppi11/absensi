@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => "teknik-ototronik"
             ],
             [
-                'Teknik Tekstil',
+                'name' => 'Teknik Tekstil',
                 'slug' => "teknik-tekstil"
             ]
         ]);

@@ -16,7 +16,8 @@
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Nama</label>
-                            <input type="text" name="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                            <input type="text" name="nama" class="form-control" placeholder="Masukkan nama Anda"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Keterangan</label>
@@ -25,6 +26,10 @@
                                 <option value="Izin">Izin</option>
                                 <option value="Sakit">Sakit</option>
                             </select>
+                        </div>
+                        <div class="mb-3" id="suratIzinField" style="display: none;">
+                            <label class="form-label">Upload Surat Izin</label>
+                            <input type="file" name="surat_izin" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-success">
                             <i class="bi bi-check-circle"></i> Absen Sekarang
@@ -50,20 +55,30 @@
                                 <th>Nama</th>
                                 <th>Keterangan</th>
                                 <th>Waktu</th>
+                                <th>Surat Izin</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {{-- @forelse ($absensHariIni as $absen)
-                                <tr>
-                                    <td>{{ $absen->user->name }}</td>
-                                    <td>{{ $absen->status }}</td>
-                                    <td>{{ $absen->created_at->format('H:i:s') }}</td>
-                                </tr>
+                            @forelse ($absensHariIni as $absen)
+                            <tr>
+                                <td>{{ $absen->user->name }}</td>
+                                <td>{{ $absen->status }}</td>
+                                <td>{{ $absen->created_at->format('H:i:s') }}</td>
+                                <td>
+                                    @if ($absen->status === 'Izin' && $absen->surat_izin)
+                                    <a href="{{ asset('storage/' . $absen->surat_izin) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50">
+                                    </a>
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
                             @empty
-                                <tr>
-                                    <td colspan="3" class="text-center">Data terakhir di-update otomatis!</td>
-                                </tr>
-                            @endforelse --}}
+                            <tr>
+                                <td colspan="3" class="text-center">Data terakhir di-update otomatis!</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -86,21 +101,31 @@
                                 <th>Keterangan</th>
                                 <th>Tanggal</th>
                                 <th>Waktu</th>
+                                <th>Surat Izin</th>
                             </tr>
                         </thead>
                         <tbody>
-                        {{ -- @forelse ($absensBulanIni as $absen)
-                                <tr>
-                                    <td>{{ $absen->user->name }}</td>
-                                    <td>{{ $absen->status }}</td>
-                                    <td>{{ $absen->created_at->format('Y-m-d') }}</td>
-                                    <td>{{ $absen->created_at->format('H:i:s') }}</td>
-                                </tr>
+                            @forelse ($absensBulanIni as $absen)
+                            <tr>
+                                <td>{{ $absen->user->name }}</td>
+                                <td>{{ $absen->status }}</td>
+                                <td>{{ $absen->created_at->format('Y-m-d') }}</td>
+                                <td>{{ $absen->created_at->format('H:i:s') }}</td>
+                                <td>
+                                    @if ($absen->status === 'Izin' && $absen->surat_izin)
+                                    <a href="{{ asset('storage/' . $absen->surat_izin) }}" target="_blank">
+                                        <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50">
+                                    </a>
+                                    @else
+                                    -
+                                    @endif
+                                </td>
+                            </tr>
                             @empty
-                                <tr>
-                                    <td colspan="4" class="text-center">Rekap absen selama bulan ini.</td>
-                                </tr>
-                            @endforelse --}}
+                            <tr>
+                                <td colspan="4" class="text-center">Rekap absen selama bulan ini.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -109,3 +134,25 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let statusSelect = document.querySelector('select[name="status"]');
+        let suratIzinField = document.getElementById('suratIzinField');
+
+        function toggleSuratIzin() {
+            if (statusSelect.value === 'Izin') {
+                suratIzinField.style.display = 'block';
+            } else {
+                suratIzinField.style.display = 'none';
+            }
+        }
+
+        // Panggil saat halaman dimuat
+        toggleSuratIzin();
+
+        // Tambahkan event listener untuk perubahan status
+        statusSelect.addEventListener('change', toggleSuratIzin);
+    });
+</script>
+@endpush

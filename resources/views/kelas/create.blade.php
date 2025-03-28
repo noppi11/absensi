@@ -19,41 +19,42 @@
     </div>
 </div>
 <div class="app-content">
-    <div class="container-fluid">
-        <div class="row col-md-6">
-            <div class="card card-primary card-outline mb-4">
-                <div class="card-header">
-                    <div class="card-title">Tambah Data</div>
-                </div>
-                <form id="form-kelas" action="{{ route('kelas.store') }}" method="POST">
-                    @csrf
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <label class="form-label">Kelas</label>
-                            <input name="nama_kelas" type="text" class="form-control">
-                        </div>
-                        {{-- <div class="mb-3">
+    <div class="app-content">
+        <div class="container-fluid">
+            <div class="row col-md-6">
+                <div class="card card-primary card-outline mb-4">
+                    <div class="card-header">
+                        <div class="card-title">Tambah Data</div>
+                    </div>
+                    <form action="{{ route('kelas.store') }}" method="POST">
+                        @csrf
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Kelas</label>
+                                <input name="nama_kelas" type="text" class="form-control">
+                            </div>
+                            {{-- <div class="mb-3">
                                 <label class="form-label">Kompetensi Keahlian</label>
                                 <input name="kompetensi_keahlian" type="text" class="form-control">
                             </div> --}}
-                        <div class="mb-3">
-                            <label class="form-label">Kompetensi Keahlian</label>
-                            <select name="kompetensi_keahlian" class="form-select" aria-label="Default select example">
-                                <option selected disabled>Pilih Kompetensi Keahlian</option>
-                                @foreach ($kopetensis as $kop)
-                                <option value="{{ $kop->id }}">{{ $kop->name }}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Wali Kelas</label>
-                            <select name="id_wali_kelas" class="form-control">
-                                <option value="">Silahkan Pilih</option>
-                                @foreach ($waliKelas as $v)
-                                <option value="{{ $v->id }}">{{ $v->name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="mb-3">
+                                <label class="form-label">Kompetensi Keahlian</label>
+                                <select name="id_kopetensi" class="form-select" aria-label="Default select example">
+                                    <option selected>Kopetensi Kelahlian</option>
+                                    @foreach ($kopetensis as $kop)
+                                        <option value="{{ $kop->id }}">{{ $kop->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Wali Kelas</label>
+                                <select name="id_wali_kelas" class="form-control">
+                                    <option value="">Silahkan Pilih</option>
+                                    @foreach ($waliKelas as $v)
+                                        <option value="{{ $v->id }}">{{ $v->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer">

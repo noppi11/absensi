@@ -40,15 +40,16 @@ class KelasController extends Controller
     {
         $request->validate([ // validasi bahwa form harus wajib diisi
             'nama_kelas' => 'required',
-            'kompetensi_keahlian' => 'nullable',
+            // 'kompetensi_keahlian' => 'nullable',
             'id_wali_kelas' => 'required',
             'id_kopetensi' => 'required'
         ]);
 
         Kelas::create([ // menyimpan form ke tabel kelas
             'nama_kelas' => $request->nama_kelas,
-            'kompetensi_keahlian' => $request->kompetensi_keahlian,
-            'id_wali_kelas' => $request->id_wali_kelas
+            // 'kompetensi_keahlian' => $request->kompetensi_keahlian,
+            'id_wali_kelas' => $request->id_wali_kelas,
+            'id_kopetensi' => $request->id_kopetensi
         ]);
 
         return redirect()->route('kelas.index')->with('success', 'Data berhasil disimpan'); // redirect setelah data disimpan
@@ -78,7 +79,8 @@ class KelasController extends Controller
         $waliKelas = User::where('role', 'guru')->get(); // mengambil users yang rolenya guru
         return view('kelas.edit', [ // pindah ke halaman ke view kelas.create
             'kelas' => $kelas,
-            'waliKelas' => $waliKelas
+            'waliKelas' => $waliKelas,
+            'kopetensis' => kopetensi :: all()
         ]);
     }
 
@@ -90,15 +92,17 @@ class KelasController extends Controller
         // validasi data harus wajib diisi 
         $request->validate([
             'nama_kelas' => 'required',
-            'kompetensi_keahlian' => 'required',
-            'id_wali_kelas' => 'required'
+            // 'kompetensi_keahlian' => 'required',
+            'id_wali_kelas' => 'required',
+            'id_kopetensi' => 'required'
         ]);
 
         // mengambil data dari form
         $data = [
             'nama_kelas' => $request->nama_kelas,
-            'kompetensi_keahlian' => $request->kompetensi_keahlian,
-            'id_wali_kelas' => $request->id_wali_kelas
+            // 'kompetensi_keahlian' => $request->kompetensi_keahlian,
+            'id_wali_kelas' => $request->id_wali_kelas,
+            'id_kopetensi' => $request->id_kopetensi
         ];
 
         // mengambil data dari tabel kelas berdasarkan id yang diupdate

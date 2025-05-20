@@ -12,7 +12,8 @@
                     <i class="bi bi-clipboard-check"></i> Absen Masuk
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('absen.store') }}" method="POST">
+                <form action="{{ route('absen.store') }}" method="POST" enctype="multipart/form-data">
+
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Nama</label>
@@ -66,13 +67,15 @@
                                 <td>{{ $absen->created_at->format('H:i:s') }}</td>
                                 <td>
                                     @if ($absen->status === 'Izin' && $absen->surat_izin)
-                                    <a href="{{ asset('storage/' . $absen->surat_izin) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50">
+                                    <a data-fancybox="gallery" href="{{ asset('storage/' . $absen->surat_izin) }}">
+                                        <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50"
+                                            style="cursor: zoom-in;" />
                                     </a>
                                     @else
                                     -
                                     @endif
                                 </td>
+
                             </tr>
                             @empty
                             <tr>
@@ -113,8 +116,9 @@
                                 <td>{{ $absen->created_at->format('H:i:s') }}</td>
                                 <td>
                                     @if ($absen->status === 'Izin' && $absen->surat_izin)
-                                    <a href="{{ asset('storage/' . $absen->surat_izin) }}" target="_blank">
-                                        <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50">
+                                    <a data-fancybox="gallery" href="{{ asset('storage/' . $absen->surat_izin) }}">
+                                    <img src="{{ asset('storage/' . $absen->surat_izin) }}" width="50" style="cursor: zoom-in;" />
+
                                     </a>
                                     @else
                                     -

@@ -15,7 +15,8 @@ class Absen extends Model
         'user_id',
         'kelas_id',
         'tanggal',
-        'status'
+        'status',
+        'surat_izin',
     ];
 
     /**

@@ -25,23 +25,27 @@ class AbsenController extends Controller
         $request->validate([
             'nama' => 'required',
             'status' => 'required|in:Hadir,Izin,Sakit',
-            'surat_izin' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
+            'surat_izin' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048', // Tambahkan pdf jika perlu
         ]);
+    
         $suratIzinPath = null;
-
-        // Jika user memilih "Izin" dan mengupload surat izin
+    
         if ($request->status === 'Izin' && $request->hasFile('surat_izin')) {
-            $suratIzinPath = $request->file('surat_izin')->store('surat_izin', 'public');
+            // Simpan ke folder 'surat_izin' dalam disk 'public'
+            $file = $request->file('surat_izin');
+            $suratIzinPath = $file->store('surat_izin', 'public');
+            // Path ini hasilnya 'surat_izin/nama_file.jpg', sesuai dengan storage/public/surat_izin
         }
-
+    
         Absen::create([
             'user_id' => Auth::id(),
             'status' => $request->status,
-            'surat_izin' => $suratIzinPath,
+            'surat_izin' => $suratIzinPath, // hanya simpan 'surat_izin/xxx.jpg' di DB
         ]);
-
+    
         return redirect()->route('absen.index')->with('success', 'Absen berhasil disimpan!');
     }
+    
 
     public function show($id)
     {

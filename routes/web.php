@@ -29,15 +29,31 @@ Route::resource('login', LoginController::class);
 // route sudah login
 Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
-    Route::resource('kelas', KelasController::class);
-    Route::resource('user', UserController::class);
+   
    // Route::get('/rekayasa_perangkat_lunak/data_siswa/kelas/{id_kelas}', [KelasController::class, 'show'])->name('kelas.show');
     //Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     //Route::get('/data/xira', function () { return view('data.xira'); })->name('xira.index');
-    Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
+
+});
+
+Route::middleware(['auth', 'role:admin,guru,siswa'])->group(function () {
+    Route::resource('absen', AbsenController::class);
+});
+
+
+// Hanya admin dan guru
+Route::middleware(['auth', 'role:admin,guru'])->group(function () {
+    Route::resource('kelas', KelasController::class);
+    Route::resource('user', UserController::class);
+
+    //Route::get('/data/xira', [KelasController::class, 'xira'])->name('kelas.xira');
     Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::post('/kelas', [KelasController::class, 'store'])->name('kelas.store');
 
+
+    Route::get('/pengguna', [UserController::class, 'index']);
+    Route::get('/kopetensi', [KopetensiController::class, 'index']);
+    Route::get('/kelas', [KelasController::class, 'index'])->name('kelas.index');
 
     // CRUD Kopetensi
     Route::get("/kopetensis", [KopetensiController::class, "index"])->name("kopetensis");
@@ -46,8 +62,20 @@ Route::middleware('auth')->group(function () {
     Route::delete("/kopetensis/{kopetensi}", [KopetensiController::class, "destroy"])->name("kopetensis.destroy");
 
     // CRUD Absensi
-    Route::resource('absen', AbsenController::class);
+    //Route::resource('absen', AbsenController::class);
+    
+    // lainnya..
+    //Route::get('/absen', [AbsenController::class, 'index'])->name('absen.index');
+    //Route::post('/absen', [AbsenController::class, 'store'])->name('absen.store');
 });
 
+// Hanya siswa
+//Route::middleware(['auth', 'role:siswa'])->group(function () {
+   // Route::get('/absen', [AbsenController::class, 'index'])->name('absen.index');
+   // Route::post('/absen', [AbsenController::class, 'store'])->name('absen.store');
+//});
+Route::get('/absen-bulan/pdf', [App\Http\Controllers\AbsenController::class, 'exportBulanPdf'])->name('absen.bulan.pdf');
+
+    
 
 

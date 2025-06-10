@@ -1,4 +1,7 @@
-{{-- @dd($kopentensis) --}}
+@php
+    $role = Auth::user()->role;
+@endphp
+
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
         <a href="../index.html" class="brand-link">
@@ -10,6 +13,8 @@
     <div class="sidebar-wrapper">
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
+
+                {{-- Dashboard --}}
                 <li class="nav-header">Dashboard</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard.index') }}" class="nav-link">
@@ -17,72 +22,83 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="nav-header">Data Master</li>
-                <li class="nav-item">
-                    <a href="{{ route('user.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-people"></i>
-                        <p>Pengguna</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('kelas.index') }}" class="nav-link">
-                        <i class="nav-icon bi bi-building"></i>
-                        <p>Kelas</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('kopetensis') }}" class="nav-link">
-                        <i class="nav-icon bi bi-person-lines-fill"></i>
-                        <p>Kopetensi</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-database"></i>
-                        <p>
-                            Data Siswa
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        @foreach ($kopetensis as $item)
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="fas fa-laptop-code nav-icon"></i>
-                                <p>
-                                    {{ $item->name }}
-                                    <i class="fas fa-angle-left right ml-3"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                @forelse ($item->classs as $kls)
-                                <li class="nav-item">
-                                    <a href="/kelas/{{ $kls->id }}" class="nav-link">
-                                        <i class="fas fa-tag nav-icon"></i>
-                                        <p>{{ $kls->nama_kelas }}</p>
-                                    </a>
-                                </li>
-                                @empty
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link" disabled>
-                                        <i class="fas fa-users nav-icon"></i>
-                                        <p class="text-warning">Tidak Ada Kelas</p>
-                                    </a>
-                                </li>
-                                @endforelse
-                            </ul>
-                        </li>
-                        @endforeach
 
-                    </ul>
-                </li>
+                {{-- Hanya tampil jika admin atau guru --}}
+                @if ($role === 'admin' || $role === 'guru')
+                    <li class="nav-header">Data Master</li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('user.index') }}" class="nav-link">
+                            <i class="nav-icon bi bi-people"></i>
+                            <p>Pengguna</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('kelas.index') }}" class="nav-link">
+                            <i class="nav-icon bi bi-building"></i>
+                            <p>Kelas</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{{ route('kopetensis') }}" class="nav-link">
+                            <i class="nav-icon bi bi-person-lines-fill"></i>
+                            <p>Kopetensi</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-database"></i>
+                            <p>
+                                Data Siswa
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @foreach ($kopetensis as $item)
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link">
+                                        <i class="fas fa-laptop-code nav-icon"></i>
+                                        <p>
+                                            {{ $item->name }}
+                                            <i class="fas fa-angle-left right ml-3"></i>
+                                        </p>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @forelse ($item->classs as $kls)
+                                            <li class="nav-item">
+                                                <a href="/kelas/{{ $kls->id }}" class="nav-link">
+                                                    <i class="fas fa-tag nav-icon"></i>
+                                                    <p>{{ $kls->nama_kelas }}</p>
+                                                </a>
+                                            </li>
+                                        @empty
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link" disabled>
+                                                    <i class="fas fa-users nav-icon"></i>
+                                                    <p class="text-warning">Tidak Ada Kelas</p>
+                                                </a>
+                                            </li>
+                                        @endforelse
+                                    </ul>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                @endif
+
+                {{-- Absen: semua role boleh --}}
                 <li class="nav-header">Absensi</li>
-                        <li class="nav-item">
-                            <a href="{{ route('absen.index') }}" class="nav-link">
-                                <i class="nav-icon bi bi-speedometer"></i>
-                                <p>Absen</p>
-                            </a>
-                        </li>
+                <li class="nav-item">
+                    <a href="{{ $role === 'siswa' ? route('absen.index') : route('absen.index') }}" class="nav-link">
+                        <i class="nav-icon bi bi-speedometer"></i>
+                        <p>Absen</p>
+                    </a>
+                </li>
+
+                {{-- Logout --}}
                 <li class="nav-header">Etc</li>
                 <li class="nav-item">
                     <a href="{{ route('login.create') }}" class="nav-link">

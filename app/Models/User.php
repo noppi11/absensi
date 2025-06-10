@@ -54,4 +54,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Kelas::class, 'id_kelas', 'id');
     }
+    public function absens()
+{
+    return $this->hasMany(Absen::class, 'user_id'); // sesuaikan foreign key jika bukan 'user_id'
+}
+public function kopetensi()
+{
+    return $this->belongsTo(Kopetensi::class, 'id_kopetensi'); // juga pakai nama kolom yang benar
+}
+
 }

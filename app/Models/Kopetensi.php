@@ -12,14 +12,30 @@ class Kopetensi extends Model
 
     protected $guarded = [];
 
-    /**
-     * Get all of the classs for the Kopetensi
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
     public function classs(): HasMany
     {
         return $this->hasMany(Kelas::class, 'id_kopetensi');
     }
+    // Model Kopetensi.php
+    public function students()
+    {
+        return $this->hasManyThrough(User::class, Kelas::class,   // model kelas
+            'id_kopetensi', // foreign key di tabel kelas yang menghubungkan ke kopetensi
+            'id_kelas',     // foreign key di tabel users yang menghubungkan ke kelas
+            'id',           // primary key kopetensi
+            'id'            // primary key kelas
+        );
+    }
+    public function users()
+    {
+        return $this->hasMany(User::class, 'id_kopetensi'); // pakai nama kolom yang benar
+    }
+    public function kelas()
+{
+    return $this->hasMany(Kelas::class, 'id_kopetensi');
+}
+
+
+
 }
 

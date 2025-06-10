@@ -96,6 +96,9 @@
                 <div class="card-header bg-primary text-white">
                     <i class="bi bi-calendar-check"></i> Rekap Absen Satu Bulan
                 </div>
+                <a href="{{ route('absen.bulan.pdf') }}" target="_blank" class="btn btn-light btn-sm">
+                    <i class="bi bi-file-earmark-pdf"></i> Cetak PDF
+                </a>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead class="table-dark">

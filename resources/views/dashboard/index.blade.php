@@ -22,7 +22,7 @@
     {{-- Tambahan ucapan selamat datang --}}
     <div class="container-fluid mb-4">
         <div class="alert alert-info">
-            Selamat datang di absensi, <strong>{{ Auth::user()->name }}</strong>!
+            Selamat datang di absensi SMK Darma Kencana, <strong>{{ Auth::user()->name }}</strong>!
         </div>
     </div>
     @php
@@ -60,7 +60,7 @@
             @endforeach
         </div>
     </div>
-    @endif
+    
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 mb-4">
@@ -91,7 +91,8 @@
             </div>
         </div>
     </div>
-        
+
+    @endif
 </div>
 </div>
 @php

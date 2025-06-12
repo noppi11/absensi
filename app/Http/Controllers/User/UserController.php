@@ -11,14 +11,16 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        $kelas = Kelas::all();
+        $users = User::all(); //Mengambil semua data dari tabel users (biasanya dari model App\Models\User) dan menyimpannya ke dalam variabel $users.
+        $kelas = Kelas::all(); //Mengambil semua data dari tabel kelas (melalui model Kelas) dan menyimpannya ke dalam variabel $kelas.
         return view('user.index', compact('users', 'kelas'));
     }
 
     public function create()
     {
+        // Mengambil semua data dari tabel 'kelas' menggunakan model Kelas
         $kelas = Kelas::all(); 
+        // Menampilkan view 'user.create' dan mengirimkan data $kelas ke dalam view tersebut
         return view('user.create', compact('kelas'));
     }
 
@@ -55,8 +57,14 @@ class UserController extends Controller
 
     public function edit(string $id)
     {
+        // Mencari data user berdasarkan ID yang diberikan
+        // Jika tidak ditemukan, otomatis akan menampilkan halaman 404
         $user = User::findOrFail($id);
+
+        // Mengambil semua data dari tabel 'kelas' menggunakan model Kelas
         $kelas = Kelas::all();
+
+        // Menampilkan view 'user.edit' dan mengirimkan data $user dan $kelas ke dalam view tersebut
         return view('user.edit', compact('user', 'kelas'));
     }
 
@@ -89,7 +97,10 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        // Mencari data user berdasarkan ID yang diberikan
+        // Jika user ditemukan, maka data akan dihapus dari database
+        // Jika tidak ditemukan, akan melempar error 404
         User::findOrFail($id)->delete();
-        return redirect()->route('user.index')->with('success', 'User berhasil dihapus');
+        return redirect()->route('user.index')->with('success', 'Data berhasil digebuk diinjek dibakar dilupakan!!!!');
     }
 }

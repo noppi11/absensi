@@ -43,7 +43,7 @@
                 </a>
             </div>
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Selamat datang di web Absensi</p>
+                <p class="login-box-msg">Selamat datang di SMK Darma Kencana</p>
                 <form action="{{ route('login.store') }}" method="post">
                     @csrf
                     <div class="input-group mb-1">

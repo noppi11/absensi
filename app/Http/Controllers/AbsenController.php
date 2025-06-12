@@ -82,18 +82,15 @@ class AbsenController extends Controller
 
     public function exportBulanPdf()
 {
-   // if (auth()->user()->role === 'siswa') {
-      //  abort(403, 'Anda tidak memiliki akses ke halaman ini.');
-   // }
-    $absensBulanIni = Absen::with('user')->whereMonth('created_at', now()->month)->get();
+   $absensBulanIni = Absen::with('user')->whereMonth('created_at', now()->month)->get();
 
-    $pdf = new TCPDF();
+   $pdf = new TCPDF();
     $pdf::SetTitle('Rekap Absen Satu Bulan');
 
     $view = view('absen.rekap-bulan', compact('absensBulanIni'))->render();
     $pdf::AddPage();
-    $pdf::writeHTML($view, true, false, true, false, '');
+   $pdf::writeHTML($view, true, false, true, false, '');
 
-    $pdf::Output('rekap-absen-bulan.pdf');
+   $pdf::Output('rekap-absen-bulan.pdf');
 }
 }

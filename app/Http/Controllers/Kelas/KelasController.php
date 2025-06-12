@@ -119,7 +119,7 @@ class KelasController extends Controller
     public function destroy(string $id)
     {
         Kelas::find($id)->delete(); // mengambil data yang akan dihapus berdasarkan id kemudian dihapus
-        return redirect()->route('kelas.index')->with('success', 'Data berhasil dihapus'); // redirect setelah dihapus
+        return redirect()->route('kelas.index')->with('success', 'Data berhasil digebuk diinjek dibakar dilupakan!!!!'); // redirect setelah dihapus
     }
     public function xira()
     {

@@ -3,7 +3,13 @@
 @section('content')
 <div class="container-fluid">
     <h3 class="mb-3">Absen</h3>
-
+      {{-- Flash message --}}
+      @if(session('success'))
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>Selamat </strong> {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+     @endif
     {{-- Absen Masuk --}}
     <div class="row">
         <div class="col-md-6">
@@ -42,7 +48,11 @@
                 </div>
             </div>
         </div>
-
+        @php
+        $user = Auth::user();
+        @endphp
+    
+        @if ($user->role === 'guru' || $user->role === 'admin')
         {{-- Rekap Absen Hari Ini --}}
         <div class="col-md-6">
             <div class="card border-secondary">
@@ -96,9 +106,11 @@
                 <div class="card-header bg-primary text-white">
                     <i class="bi bi-calendar-check"></i> Rekap Absen Satu Bulan
                 </div>
-                <a href="{{ route('absen.bulan.pdf') }}" target="_blank" class="btn btn-light btn-sm">
-                    <i class="bi bi-file-earmark-pdf"></i> Cetak PDF
-                </a>
+                <div style="position: absolute; top: 10px; right: 10px; z-index: 1000;">
+                    <a href="{{ route('absen.bulan.pdf') }}" target="_blank" class="btn btn-light btn-sm" style="font-size: 0.75rem; padding: 2px 6px;">
+                        <i class="bi bi-file-earmark-pdf"></i> Cetak PDF
+                    </a>
+                </div>
                 <div class="card-body">
                     <table class="table table-bordered">
                         <thead class="table-dark">
@@ -139,6 +151,7 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
 @endsection
 @push('scripts')

@@ -30,16 +30,22 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
+        // Memvalidasi input dari form login agar username dan password wajib diisi
         $cekLogin = $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
 
+        // Mengecek apakah kredensial username dan password sesuai dengan data di database
         if(Auth::attempt($cekLogin))
         {
+            // Jika berhasil login, buat ulang session untuk mencegah session fixation
             $request->session()->regenerate();
+
+            // Redirect ke halaman yang diinginkan user (atau ke dashboard jika tidak ada tujuan sebelumnya)
             return redirect()->intended(route('dashboard.index'));
         }
+        // Jika login gagal, kembalikan ke halaman sebelumnya dengan pesan error 
         return back()->with('error', 'Login Gagal !');
     }
 
